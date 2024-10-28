@@ -11,8 +11,9 @@ export default function TodoForm() {
     const todo: string = formData.get('todo') as string;
     console.log('inside OnSubmit', formData.get('todo'));
     addTodo(todo);
-    (event.target as HTMLFormElement).reset();
+    event.currentTarget.reset();
   }
+
   return (
     <div className={`${styles.container}`}>
       <form onSubmit={onSubmit} className={styles.form}>

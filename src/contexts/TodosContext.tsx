@@ -49,7 +49,7 @@ export const TodosProvider = ({ children }: TodosProviderProps) => {
         }
         return todo;
       });
-      console.log(updatedTodos); // Log the updated todos here
+
       return updatedTodos;
     });
   };
