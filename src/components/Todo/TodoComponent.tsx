@@ -1,17 +1,14 @@
-import React from 'react';
+import { useTodos } from '../../contexts/TodosContext';
 import styles from './Todo.module.css';
 
 type TodoPropTypes = {
-  id: number;
+  id: string;
   title: string;
-  completed?: boolean;
+  completed: boolean;
 };
 
-export default function TodoComponent({
-  id,
-  title,
-  completed = false,
-}: TodoPropTypes) {
+export default function TodoComponent({ id, title, completed }: TodoPropTypes) {
+  const { completeTodo } = useTodos();
   return (
     <li
       key={id}
@@ -21,6 +18,7 @@ export default function TodoComponent({
         <input
           type='checkbox'
           checked={completed}
+          onChange={() => completeTodo(id)}
           className={styles.checkbox}
         />
         <span className={styles.text}>{title}</span>

@@ -5,6 +5,7 @@ import { Todo } from '../types/todos.types';
 interface TodosContextType {
   todos: Todo[];
   addTodo: (title: string) => void;
+  completeTodo: (id: string) => void;
 }
 
 interface TodosProviderProps {
@@ -30,7 +31,7 @@ export const TodosProvider = ({ children }: TodosProviderProps) => {
   const addTodo = (title: string) => {
     setTodos((prev) => [
       {
-        id: Date.now() * (Math.random() + 1),
+        id: crypto.randomUUID(),
         title,
         completed: false,
         createdAt: Date.now(),
@@ -40,9 +41,23 @@ export const TodosProvider = ({ children }: TodosProviderProps) => {
     ]);
   };
 
+  const completeTodo = (id: string) => {
+    setTodos((prev) => {
+      const updatedTodos = prev.map((todo) => {
+        if (todo.id === id) {
+          return { ...todo, completed: !todo.completed };
+        }
+        return todo;
+      });
+      console.log(updatedTodos); // Log the updated todos here
+      return updatedTodos;
+    });
+  };
+
   const value = {
     todos,
     addTodo,
+    completeTodo,
   };
 
   return (

@@ -20,7 +20,12 @@ function App() {
           {todos.length > 0 ? (
             <ul className='todo-list'>
               {todos.map((todo: Todo) => (
-                <TodoComponent key={todo.id} id={todo.id} title={todo.title} />
+                <TodoComponent
+                  key={todo.id}
+                  id={todo.id}
+                  title={todo.title}
+                  completed={todo.completed}
+                />
               ))}
             </ul>
           ) : (
