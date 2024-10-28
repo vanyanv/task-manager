@@ -1,14 +1,6 @@
 // TodosContext.tsx
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-
-// Types
-export interface Todo {
-  id: number;
-  title: string;
-  completed: boolean;
-  createdAt: number;
-  updatedAt: number | null;
-}
+import { Todo } from '../types/todos.types';
 
 interface TodosContextType {
   todos: Todo[];
