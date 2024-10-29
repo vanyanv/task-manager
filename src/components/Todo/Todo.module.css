@@ -1,20 +1,23 @@
-/* Todo.module.css */
+/* General Todo Item Styling */
 .todo {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem;
-  background: white;
-  border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  margin-bottom: 0.5rem;
-  animation: slideIn 0.2s ease;
+  padding: 1rem 1.25rem; /* Increased padding for larger size */
+  background-color: #f1f5f9; /* Light gray to match editing form */
+  border: 1px solid #e5e7eb; /* Soft border for definition */
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 0.75rem;
+  animation: slideIn 0.3s ease;
+  transition: box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
 .todo:hover {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
+/* Checkbox and Text Styling */
 .checkboxContainer {
   display: flex;
   align-items: center;
@@ -24,16 +27,22 @@
 }
 
 .checkbox {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 1.5rem; /* Larger checkbox */
+  height: 1.5rem;
   border-radius: 4px;
-  border: 2px solid #e5e7eb;
+  border: 2px solid #d1d5db;
   cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.checkbox:hover {
+  border-color: #3b82f6;
 }
 
 .text {
-  font-size: 0.875rem;
+  font-size: 1rem; /* Larger font */
   color: #374151;
+  transition: color 0.2s ease;
 }
 
 .completed .text {
@@ -41,25 +50,53 @@
   color: #9ca3af;
 }
 
-.deleteButton {
-  padding: 0.25rem 0.75rem;
-  background-color: #ef4444;
+/* Delete and Edit Buttons Styling */
+.deleteButton,
+.editButton {
+  padding: 0.35rem 0.85rem;
+  margin: 2px;
   color: white;
   border: none;
-  border-radius: 4px;
-  font-size: 0.75rem;
+  border-radius: 6px;
+  font-size: 0.85rem; /* Slightly larger font */
   opacity: 0;
   transition: opacity 0.2s ease, background-color 0.2s ease;
+  cursor: pointer;
 }
 
-.todo:hover .deleteButton {
+.todo:hover .deleteButton,
+.todo:hover .editButton {
   opacity: 1;
+}
+
+/* Specific Button Colors and Hover Effects */
+.deleteButton {
+  background-color: #ef4444;
 }
 
 .deleteButton:hover {
   background-color: #dc2626;
 }
 
+.editButton {
+  background-color: #3b82f6;
+}
+
+.editButton:hover {
+  background-color: #2563eb;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .deleteButton,
+  .editButton {
+    opacity: 1;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+}
+
+/* Slide-in Animation */
 @keyframes slideIn {
   from {
     opacity: 0;
@@ -68,36 +105,5 @@
   to {
     opacity: 1;
     transform: translateX(0);
-  }
-}
-
-@media (max-width: 480px) {
-  .deleteButton {
-    opacity: 1;
-  }
-}
-/* edit button */
-.editButton {
-  padding: 0.25rem 0.75rem;
-  background-color: #3b82f6; /* Blue background */
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  opacity: 0;
-  transition: opacity 0.2s ease, background-color 0.2s ease;
-}
-
-.todo:hover .editButton {
-  opacity: 2;
-}
-
-.editButton:hover {
-  background-color: #2563eb; /* Darker blue on hover */
-}
-
-@media (max-width: 480px) {
-  .editButton {
-    opacity: 1;
   }
 }
