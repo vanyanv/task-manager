@@ -2,45 +2,51 @@
 .todo {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 1rem 1.25rem; /* Increased padding for larger size */
-  background-color: #f1f5f9; /* Light gray to match editing form */
-  border: 1px solid #e5e7eb; /* Soft border for definition */
-  border-radius: 6px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 0.75rem;
-  animation: slideIn 0.3s ease;
-  transition: box-shadow 0.2s ease, background-color 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .todo:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Checkbox and Text Styling */
+/* Checkbox, Title, and Timestamp Container */
+.todoContent {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Checkbox and Title Styling */
 .checkboxContainer {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   cursor: pointer;
-  flex: 1;
 }
 
 .checkbox {
-  width: 1.5rem; /* Larger checkbox */
-  height: 1.5rem;
+  width: 1.2rem;
+  height: 1.2rem;
   border-radius: 4px;
-  border: 2px solid #d1d5db;
+  border: 2px solid #3b82f6;
   cursor: pointer;
   transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .checkbox:hover {
-  border-color: #3b82f6;
+  border-color: #2563eb;
 }
 
 .text {
-  font-size: 1rem; /* Larger font */
+  font-size: 1rem;
   color: #374151;
   transition: color 0.2s ease;
 }
@@ -50,32 +56,29 @@
   color: #9ca3af;
 }
 
-/* Delete and Edit Buttons Styling */
+/* Created At Styling */
+.createdAt {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+/* Edit and Delete Button Container */
+.buttonContainer {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: auto; /* Align buttons to the right */
+}
+
 .deleteButton,
 .editButton {
-  padding: 0.35rem 0.85rem;
-  margin: 2px;
+  padding: 0.4rem 0.8rem;
   color: white;
   border: none;
   border-radius: 6px;
-  font-size: 0.85rem; /* Slightly larger font */
-  opacity: 0;
-  transition: opacity 0.2s ease, background-color 0.2s ease;
+  font-size: 0.85rem;
+  transition: background-color 0.2s ease;
   cursor: pointer;
-}
-
-.todo:hover .deleteButton,
-.todo:hover .editButton {
-  opacity: 1;
-}
-
-/* Specific Button Colors and Hover Effects */
-.deleteButton {
-  background-color: #ef4444;
-}
-
-.deleteButton:hover {
-  background-color: #dc2626;
 }
 
 .editButton {
@@ -86,13 +89,19 @@
   background-color: #2563eb;
 }
 
+.deleteButton {
+  background-color: #ef4444;
+}
+
+.deleteButton:hover {
+  background-color: #dc2626;
+}
+
 /* Responsive Design */
 @media (max-width: 480px) {
-  .deleteButton,
-  .editButton {
-    opacity: 1;
-    width: 100%;
-    margin-top: 0.5rem;
+  .buttonContainer {
+    flex-direction: column;
+    gap: 0.5rem;
   }
 }
 
@@ -100,10 +109,10 @@
 @keyframes slideIn {
   from {
     opacity: 0;
-    transform: translateX(-10px);
+    transform: translateY(-10px);
   }
   to {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateY(0);
   }
 }
