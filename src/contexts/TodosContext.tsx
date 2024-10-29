@@ -6,6 +6,7 @@ interface TodosContextType {
   todos: Todo[];
   addTodo: (title: string) => void;
   completeTodo: (id: string) => void;
+  editTodo: (title: string, id: string) => void;
 }
 
 interface TodosProviderProps {
@@ -41,6 +42,18 @@ export const TodosProvider = ({ children }: TodosProviderProps) => {
     ]);
   };
 
+  const editTodo = (title: string, id: string) => {
+    setTodos((prev) => {
+      const editedTodos = prev.map((todo) => {
+        if (todo.id === id) {
+          return { ...todo, title };
+        }
+        return todo;
+      });
+      return editedTodos;
+    });
+  };
+
   const completeTodo = (id: string) => {
     setTodos((prev) => {
       const updatedTodos = prev.map((todo) => {
@@ -58,6 +71,7 @@ export const TodosProvider = ({ children }: TodosProviderProps) => {
     todos,
     addTodo,
     completeTodo,
+    editTodo,
   };
 
   return (
