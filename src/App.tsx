@@ -2,7 +2,7 @@
 import './App.css';
 import TodoComponent from './components/Todo/TodoComponent';
 import TodoForm from './components/TodoForm/TodoForm';
-import { useTodos } from './contexts/TodosContext';
+import { useTodos } from './hooks/useTodos';
 import { Todo } from './types/todos.types';
 
 function App() {

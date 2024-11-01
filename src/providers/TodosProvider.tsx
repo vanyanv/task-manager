@@ -1,34 +1,29 @@
-// TodosContext.tsx
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+// providers/TodosProvider.tsx
+import React, { useState, ReactNode, useEffect } from 'react';
+import { TodosContext } from '../context/TodosContext';
 import { Todo } from '../types/todos.types';
-
-interface TodosContextType {
-  todos: Todo[];
-  addTodo: (title: string) => void;
-  completeTodo: (id: string) => void;
-  editTodo: (title: string, id: string) => void;
-  deleteTodo: (id: string) => void;
-}
 
 interface TodosProviderProps {
   children: ReactNode;
 }
 
-// Context
-const TodosContext = createContext<TodosContextType | null>(null);
-
-// Hook
-export const useTodos = () => {
-  const context = useContext(TodosContext);
-  if (!context) {
-    throw new Error('useTodos must be used within a TodosProvider');
-  }
-  return context;
-};
-
-// Provider
 export const TodosProvider = ({ children }: TodosProviderProps) => {
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const [todos, setTodos] = useState<Todo[]>(getInitialState());
+
+  function getInitialState() {
+    const todos = localStorage.getItem('todos');
+    return todos ? JSON.parse(todos) : [];
+  }
+
+  //make sure to update storage as our todo state changes, as the user added or edits
+  useEffect(() => {
+    try {
+      // Only save if todos is not empty
+      localStorage.setItem('todos', JSON.stringify(todos));
+    } catch (error) {
+      console.error('Error saving todos to localStorage:', error);
+    }
+  }, [todos]);
 
   const addTodo = (title: string) => {
     setTodos((prev) => [
@@ -60,6 +55,7 @@ export const TodosProvider = ({ children }: TodosProviderProps) => {
       return prev.filter((todo) => todo.id !== id);
     });
   };
+
   const completeTodo = (id: string) => {
     setTodos((prev) => {
       const updatedTodos = prev.map((todo) => {
@@ -68,7 +64,6 @@ export const TodosProvider = ({ children }: TodosProviderProps) => {
         }
         return todo;
       });
-
       return updatedTodos;
     });
   };
