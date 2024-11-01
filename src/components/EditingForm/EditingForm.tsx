@@ -13,6 +13,7 @@ export default function EditingForm({
   id,
   setEditing,
 }: EditingFormProps) {
+  //context
   const { editTodo } = useTodos();
 
   function submitEdit(e: React.FormEvent<HTMLFormElement>): void {
@@ -20,6 +21,7 @@ export default function EditingForm({
 
     const formData = new FormData(e.currentTarget);
     const newTodo = formData.get('edit') as string;
+    if (newTodo === '') return;
     editTodo(newTodo, id);
     setEditing(false);
   }
