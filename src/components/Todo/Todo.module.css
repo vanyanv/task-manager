@@ -1,39 +1,54 @@
-/* Todo.module.css */
+/* General Todo Item Styling */
 .todo {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding: 1rem;
-  background: white;
-  border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  margin-bottom: 0.5rem;
-  animation: slideIn 0.2s ease;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 0.75rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .todo:hover {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
+/* Checkbox, Title, and Timestamp Container */
+.todoContent {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Checkbox and Title Styling */
 .checkboxContainer {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   cursor: pointer;
-  flex: 1;
 }
 
 .checkbox {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 1.2rem;
+  height: 1.2rem;
   border-radius: 4px;
-  border: 2px solid #e5e7eb;
+  border: 2px solid #3b82f6;
   cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.checkbox:hover {
+  border-color: #2563eb;
 }
 
 .text {
-  font-size: 0.875rem;
+  font-size: 1rem;
   color: #374151;
+  transition: color 0.2s ease;
 }
 
 .completed .text {
@@ -41,63 +56,63 @@
   color: #9ca3af;
 }
 
-.deleteButton {
-  padding: 0.25rem 0.75rem;
-  background-color: #ef4444;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  opacity: 0;
-  transition: opacity 0.2s ease, background-color 0.2s ease;
+/* Created At Styling */
+.createdAt {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
 }
 
-.todo:hover .deleteButton {
-  opacity: 1;
+/* Edit and Delete Button Container */
+.buttonContainer {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: auto; /* Align buttons to the right */
+}
+
+.deleteButton,
+.editButton {
+  padding: 0.4rem 0.8rem;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.editButton {
+  background-color: #3b82f6;
+}
+
+.editButton:hover {
+  background-color: #2563eb;
+}
+
+.deleteButton {
+  background-color: #ef4444;
 }
 
 .deleteButton:hover {
   background-color: #dc2626;
 }
 
+/* Responsive Design */
+@media (max-width: 480px) {
+  .buttonContainer {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+/* Slide-in Animation */
 @keyframes slideIn {
   from {
     opacity: 0;
-    transform: translateX(-10px);
+    transform: translateY(-10px);
   }
   to {
     opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@media (max-width: 480px) {
-  .deleteButton {
-    opacity: 1;
-  }
-}
-/* edit button */
-.editButton {
-  padding: 0.25rem 0.75rem;
-  background-color: #3b82f6; /* Blue background */
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  opacity: 0;
-  transition: opacity 0.2s ease, background-color 0.2s ease;
-}
-
-.todo:hover .editButton {
-  opacity: 2;
-}
-
-.editButton:hover {
-  background-color: #2563eb; /* Darker blue on hover */
-}
-
-@media (max-width: 480px) {
-  .editButton {
-    opacity: 1;
+    transform: translateY(0);
   }
 }

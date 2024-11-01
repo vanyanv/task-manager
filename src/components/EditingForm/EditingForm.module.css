@@ -1,0 +1,70 @@
+/* Updated Styling for Integrated EditingForm */
+.editingForm {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0; /* Adjusted padding to match the todo item */
+  border: none;
+  box-shadow: none;
+  margin: 0; /* Removed margin to fully blend with todo */
+}
+
+.editingForm input[type='text'] {
+  flex: 1;
+  padding: 0.5rem 1rem; /* Padding aligns with the todo item */
+  font-size: 1rem;
+  border: 1px solid #d1d5db; /* Subtle border for the input */
+  border-radius: 4px;
+  color: #374151;
+  outline: none;
+  background-color: transparent; /* Transparent background to blend */
+  transition: border-color 0.2s ease;
+}
+
+.editingForm input[type='text']:focus {
+  border-color: #2563eb; /* Blue border on focus */
+}
+
+/* Integrated Buttons Styling */
+.editingForm .editButton,
+.editingForm .deleteButton {
+  padding: 0.35rem 0.85rem;
+  font-size: 0.85rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.editingForm .editButton {
+  background-color: #3b82f6;
+  color: white;
+  margin-left: 0.5rem;
+}
+
+.editingForm .editButton:hover {
+  background-color: #2563eb;
+}
+
+.editingForm .deleteButton {
+  background-color: #ef4444;
+  color: white;
+  margin-left: 0.5rem;
+}
+
+.editingForm .deleteButton:hover {
+  background-color: #dc2626;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .editingForm {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .editingForm input[type='text'],
+  .editingForm .editButton,
+  .editingForm .deleteButton {
+    width: 100%;
+    margin: 0.25rem 0;
+  }
+}

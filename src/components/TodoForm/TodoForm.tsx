@@ -1,15 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './TodoForm.module.css';
 import { useTodos } from '../../contexts/TodosContext';
 
 export default function TodoForm() {
   const { addTodo } = useTodos();
+  const [errors, setError] = useState<{ input: string }>({ input: '' });
 
   function onSubmit(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
+    //resetting errors
+    setError({ input: '' });
     const formData = new FormData(event.currentTarget);
     const todo: string = formData.get('todo') as string;
-    console.log('inside OnSubmit', formData.get('todo'));
+    console.log(todo);
+
+    //manual validation
+    if (todo == '') {
+      setError({ ...errors, input: 'Please Enter A Todo' });
+      return;
+    }
     addTodo(todo);
     event.currentTarget.reset();
   }
@@ -30,6 +39,7 @@ export default function TodoForm() {
               className={styles.input}
               required
             />
+            {errors.input && <p>{errors.input}</p>}
             <button type='submit' className={styles.button}>
               Add Todo
             </button>

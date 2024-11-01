@@ -25,6 +25,7 @@ function App() {
                   id={todo.id}
                   title={todo.title}
                   completed={todo.completed}
+                  createdAt={todo.createdAt}
                 />
               ))}
             </ul>
