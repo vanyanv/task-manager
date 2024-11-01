@@ -46,7 +46,7 @@ A modern, feature-rich task management application built with React that showcas
 - [ ] Undo/Redo Actions
 
 ### Phase 3: Data Management
-- [ ] Local Storage Persistence
+- [] Local Storage Persistence
 - [ ] Backend API Integration
 - [ ] Offline Support
 - [ ] Data Export/Import

@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './EditingForm.module.css';
-import { useTodos } from '../../contexts/TodosContext';
+import { useTodos } from '../../hooks/useTodos';
 
 type EditingFormProps = {
   title: string;

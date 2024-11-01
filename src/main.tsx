@@ -1,6 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { TodosProvider } from './contexts/TodosContext.tsx';
+import { TodosProvider } from './providers/TodosProvider.tsx';
 import './index.css';
 import App from './App.tsx';
 

@@ -2,7 +2,7 @@
 import './App.css';
 import TodoComponent from './components/Todo/TodoComponent';
 import TodoForm from './components/TodoForm/TodoForm';
-import { useTodos } from './contexts/TodosContext';
+import { useTodos } from './hooks/useTodos';
 import { Todo } from './types/todos.types';
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
           <TodoForm />
           {todos.length > 0 ? (
             <ul className='todo-list'>
-              {todos.map((todo: Todo) => (
+              {todos?.map((todo: Todo) => (
                 <TodoComponent
                   key={todo.id}
                   id={todo.id}

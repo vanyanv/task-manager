@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useTodos } from '../../contexts/TodosContext';
+import { useTodos } from '../../hooks/useTodos';
 import styles from './Todo.module.css';
 import EditingForm from '../EditingForm/EditingForm';
 
