@@ -8,10 +8,16 @@ export default function TodoForm() {
 
   function onSubmit(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
+    //resetting errors
+    setError({ input: '' });
     const formData = new FormData(event.currentTarget);
     const todo: string = formData.get('todo') as string;
+    console.log(todo);
+
+    //manual validation
     if (todo == '') {
       setError({ ...errors, input: 'Please Enter A Todo' });
+      return;
     }
     addTodo(todo);
     event.currentTarget.reset();
