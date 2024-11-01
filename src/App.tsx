@@ -19,7 +19,7 @@ function App() {
           <TodoForm />
           {todos.length > 0 ? (
             <ul className='todo-list'>
-              {todos.map((todo: Todo) => (
+              {todos?.map((todo: Todo) => (
                 <TodoComponent
                   key={todo.id}
                   id={todo.id}

@@ -8,21 +8,34 @@ interface TodosProviderProps {
 }
 
 export const TodosProvider = ({ children }: TodosProviderProps) => {
-  const [todos, setTodos] = useState<Todo[]>(getInitialState());
+  const [todos, setTodos] = useState<Todo[]>(() => {
+    const savedTodos = localStorage.getItem('todos');
+    try {
+      return savedTodos ? JSON.parse(savedTodos) : [];
+    } catch (error) {
+      console.error('Error parsing todos from localStorage:', error);
+      return [];
+    }
+  });
 
   function getInitialState() {
-    const todos = localStorage.getItem('todos');
-    return todos ? JSON.parse(todos) : [];
-  }
-
-  //make sure to update storage as our todo state changes, as the user added or edits
-  useEffect(() => {
     try {
-      // Only save if todos is not empty
       localStorage.setItem('todos', JSON.stringify(todos));
+      console.log('Todos saved successfully');
     } catch (error) {
       console.error('Error saving todos to localStorage:', error);
     }
+  }
+
+  useEffect(() => {
+    getInitialState();
+  }, []);
+
+  //make sure to update storage as our todo state changes, as the user added or edits
+  useEffect(() => {
+    // Only save if todos is not empty
+    console.log('saving');
+    localStorage.setItem('todos', JSON.stringify(todos));
   }, [todos]);
 
   const addTodo = (title: string) => {
