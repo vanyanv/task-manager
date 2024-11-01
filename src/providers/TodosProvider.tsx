@@ -8,7 +8,9 @@ interface TodosProviderProps {
 }
 
 export const TodosProvider = ({ children }: TodosProviderProps) => {
+  // Initialize state with a function to avoid unnecessary re-renders
   const [todos, setTodos] = useState<Todo[]>(() => {
+    // This runs only on initial render
     const savedTodos = localStorage.getItem('todos');
     try {
       return savedTodos ? JSON.parse(savedTodos) : [];
@@ -18,24 +20,14 @@ export const TodosProvider = ({ children }: TodosProviderProps) => {
     }
   });
 
-  function getInitialState() {
+  // Save to localStorage whenever todos change
+  useEffect(() => {
     try {
       localStorage.setItem('todos', JSON.stringify(todos));
       console.log('Todos saved successfully');
     } catch (error) {
       console.error('Error saving todos to localStorage:', error);
     }
-  }
-
-  useEffect(() => {
-    getInitialState();
-  }, []);
-
-  //make sure to update storage as our todo state changes, as the user added or edits
-  useEffect(() => {
-    // Only save if todos is not empty
-    console.log('saving');
-    localStorage.setItem('todos', JSON.stringify(todos));
   }, [todos]);
 
   const addTodo = (title: string) => {
