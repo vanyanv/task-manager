@@ -1,5 +1,6 @@
 // App.tsx
 import './App.css';
+import FilterBar from './components/FilterBar/FilterBar';
 import TodoComponent from './components/Todo/TodoComponent';
 import TodoForm from './components/TodoForm/TodoForm';
 import { useTodos } from './hooks/useTodos';
@@ -17,6 +18,7 @@ function App() {
         </header>
         <main className='app-main'>
           <TodoForm />
+          <FilterBar />
           {todos.length > 0 ? (
             <ul className='todo-list'>
               {todos?.map((todo: Todo) => (
