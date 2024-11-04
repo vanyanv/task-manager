@@ -1,19 +1,29 @@
-import React from 'react';
+import { useState } from 'react';
+type FilterBarProps = {
+  filter: string;
+  setFilter: (input: string) => void;
+};
 
-const FilterBar = () => {
+const FilterBar = ({ setFilter, filter }: FilterBarProps) => {
   const filters = ['All', 'Completed'];
+  const [isSelected, setIsSelected] = useState(false);
+
+  const toggleSelected = () => setIsSelected(!isSelected);
 
   return (
     <div className='filter-panel'>
       <h2 className='filter-title'>Filter Options</h2>
       <div className='filter-options'>
-        {filters.map((filter) => (
+        {filters.map((currFilter) => (
           <button
-            key={filter}
-            className={`filter-button 
-            }`}
+            key={currFilter}
+            className={`button ${filter === currFilter ? 'selected' : ''}`}
+            onClick={() => {
+              toggleSelected();
+              setFilter(currFilter);
+            }}
           >
-            {filter}
+            {currFilter}
           </button>
         ))}
       </div>

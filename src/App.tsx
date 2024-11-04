@@ -5,9 +5,19 @@ import TodoComponent from './components/Todo/TodoComponent';
 import TodoForm from './components/TodoForm/TodoForm';
 import { useTodos } from './hooks/useTodos';
 import { Todo } from './types/todos.types';
+import { useState } from 'react';
 
 function App() {
+  const [filter, setFilter] = useState<string>('All');
   const { todos } = useTodos();
+
+  const filteredTodos = todos.filter((todo: Todo) => {
+    if (filter === 'Completed') {
+      return todo.completed;
+    } else {
+      return todo;
+    }
+  });
 
   return (
     <div className='app'>
@@ -18,10 +28,10 @@ function App() {
         </header>
         <main className='app-main'>
           <TodoForm />
-          <FilterBar />
-          {todos.length > 0 ? (
+          <FilterBar setFilter={setFilter} filter={filter} />
+          {filteredTodos.length > 0 ? (
             <ul className='todo-list'>
-              {todos?.map((todo: Todo) => (
+              {filteredTodos.map((todo: Todo) => (
                 <TodoComponent
                   key={todo.id}
                   id={todo.id}

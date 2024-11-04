@@ -46,3 +46,9 @@
   background-color: #1f2937;
   color: #ffffff;
 }
+
+.button.selected {
+  background-color: #007bff; /* Blue background */
+  color: white;
+  border-color: #007bff;
+}
