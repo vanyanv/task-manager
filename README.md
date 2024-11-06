@@ -33,7 +33,7 @@ A modern, feature-rich task management application built with React that showcas
 
 ### Phase 1: Advanced Task Features
 
-- [ ] Task Categories/Tags
+- [x] Task Categories/Tags
 - [ ] Priority Levels (High, Medium, Low)
 - [ ] Due Dates
 - [ ] Task Description/Notes
