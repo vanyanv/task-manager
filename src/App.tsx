@@ -36,6 +36,7 @@ function App() {
                   key={todo.id}
                   id={todo.id}
                   title={todo.title}
+                  category={todo.category}
                   completed={todo.completed}
                   createdAt={todo.createdAt}
                 />

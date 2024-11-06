@@ -1,118 +1,343 @@
-/* General Todo Item Styling */
 .todo {
-  display: flex;
-  align-items: center;
-  padding: 1rem;
-  background-color: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  background: #ffffff;
+  border-radius: 12px;
   margin-bottom: 0.75rem;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
 }
 
 .todo:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
 }
 
-/* Checkbox, Title, and Timestamp Container */
-.todoContent {
-  flex: 1;
+.todoWrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 1rem 1.25rem;
+  gap: 1rem;
 }
 
-/* Checkbox and Title Styling */
-.checkboxContainer {
+.mainContent {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  cursor: pointer;
+  gap: 1rem;
+  flex: 1;
+  min-width: 0; /* Prevents flex item from overflowing */
+}
+
+.checkboxWrapper {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
 }
 
 .checkbox {
-  width: 1.2rem;
-  height: 1.2rem;
-  border-radius: 4px;
-  border: 2px solid #3b82f6;
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
   cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  z-index: 1;
 }
 
-.checkbox:hover {
-  border-color: #2563eb;
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #3b82f6;
+  border-radius: 6px;
+  transition: all 0.2s ease;
 }
 
-.text {
-  font-size: 1rem;
-  color: #374151;
+.checkbox:checked + .checkmark {
+  background-color: #3b82f6;
+  border-color: #3b82f6;
+}
+
+.checkbox:checked + .checkmark::after {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.todoInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0; /* Prevents flex item from overflowing */
+}
+
+.title {
+  font-size: 0.95rem;
+  color: #1f2937;
+  font-weight: 500;
   transition: color 0.2s ease;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.completed .text {
-  text-decoration: line-through;
+/* New completed styles */
+.completed {
+  background-color: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+.completed .title {
   color: #9ca3af;
+  text-decoration: line-through;
 }
 
-/* Created At Styling */
+.completed::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 4px;
+  background-color: #22c55e;
+  animation: slideIn 0.3s ease;
+}
+
+.completed .todoWrapper {
+  opacity: 0.8;
+}
+
+/* Enhanced checkbox styles */
+.checkboxWrapper {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.checkbox {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 22px;
+  height: 22px;
+  border: 2px solid #3b82f6;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+/* Improved completed checkbox state */
+.checkbox:checked + .checkmark {
+  background-color: #22c55e;
+  border-color: #22c55e;
+  animation: checkmark 0.2s ease-in-out;
+}
+
+.checkbox:checked + .checkmark::after {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 3px;
+  width: 6px;
+  height: 11px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  animation: checkmarkDraw 0.2s ease-in-out 0.1s both;
+}
+
+/* Enhanced completed title styles */
+.completed .title {
+  color: #94a3b8;
+  text-decoration: line-through;
+  transition: all 0.3s ease;
+}
+
+.completed .todoInfo {
+  position: relative;
+}
+
+.completed .metaInfo {
+  opacity: 0.7;
+}
+
+/* Updated action buttons for completed state */
+.completed .actionButton {
+  background-color: #f1f5f9;
+  color: #64748b;
+}
+
+.completed .deleteButton {
+  color: #ef4444;
+  opacity: 0.8;
+}
+
+.completed .deleteButton:hover {
+  opacity: 1;
+  background-color: #fee2e2;
+}
+
+/* Animations */
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes checkmark {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes checkmarkDraw {
+  0% {
+    height: 0;
+    opacity: 0;
+  }
+  100% {
+    height: 11px;
+    opacity: 1;
+  }
+}
+
+/* Highlight animation when completing */
+@keyframes completeHighlight {
+  0% {
+    background-color: #ffffff;
+  }
+  50% {
+    background-color: #f0fdf4;
+  }
+  100% {
+    background-color: #f8fafc;
+  }
+}
+
+.completed {
+  animation: completeHighlight 0.5s ease;
+}
+
+/* Optional: Add a strikethrough animation */
+@keyframes strikethrough {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.completed .title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 1px;
+  background-color: #94a3b8;
+  animation: strikethrough 0.3s ease-in-out;
+}
+
+.metaInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
 .createdAt {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: #6b7280;
-  margin-top: 0.25rem;
+  white-space: nowrap;
 }
 
-/* Edit and Delete Button Container */
-.buttonContainer {
+.actions {
   display: flex;
   gap: 0.5rem;
-  margin-left: auto; /* Align buttons to the right */
+  opacity: 0;
+  transition: opacity 0.2s ease;
 }
 
-.deleteButton,
-.editButton {
-  padding: 0.4rem 0.8rem;
-  color: white;
-  border: none;
+.actions.visible {
+  opacity: 1;
+}
+
+.actionButton {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
   border-radius: 6px;
-  font-size: 0.85rem;
-  transition: background-color 0.2s ease;
+  border: none;
   cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: #f3f4f6;
+  color: #4b5563;
 }
 
-.editButton {
-  background-color: #3b82f6;
-}
-
-.editButton:hover {
-  background-color: #2563eb;
+.actionButton:hover {
+  background-color: #e5e7eb;
 }
 
 .deleteButton {
-  background-color: #ef4444;
+  color: #ef4444;
 }
 
 .deleteButton:hover {
-  background-color: #dc2626;
+  background-color: #fee2e2;
 }
 
-/* Responsive Design */
-@media (max-width: 480px) {
-  .buttonContainer {
+@media (max-width: 640px) {
+  .todoWrapper {
     flex-direction: column;
-    gap: 0.5rem;
+    align-items: flex-start;
+    padding: 0.75rem 1rem;
   }
-}
 
-/* Slide-in Animation */
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
+  .actions {
     opacity: 1;
-    transform: translateY(0);
+    width: 100%;
+    padding-top: 0.5rem;
+    margin-top: 0.5rem;
+    border-top: 1px solid #f3f4f6;
+  }
+
+  .actionButton {
+    flex: 1;
+    text-align: center;
+    padding: 0.5rem;
+  }
+
+  .metaInfo {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
   }
 }
