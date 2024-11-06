@@ -20,14 +20,13 @@ export default function TodoComponent({
   createdAt,
 }: TodoPropTypes) {
   const [editing, setEditing] = useState<boolean>(false);
-
+  const [isHovered, setIsHovered] = useState<boolean>(false);
   const { completeTodo, deleteTodo } = useTodos();
 
   const formatDateTime = (date: number): string => {
     const formatter = new Intl.DateTimeFormat('en-US', {
-      month: 'long',
+      month: 'short',
       day: 'numeric',
-      year: 'numeric',
       hour: 'numeric',
       minute: '2-digit',
       hour12: true,
@@ -37,41 +36,56 @@ export default function TodoComponent({
 
   return (
     <li
-      key={id}
       className={`${styles.todo} ${completed ? styles.completed : ''}`}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       {editing ? (
         <EditingForm id={id} title={title} setEditing={setEditing} />
       ) : (
-        <>
-          <div className={styles.todoContent}>
-            <CategoryBadge category={category} />
-            <label className={styles.checkboxContainer}>
+        <div className={styles.todoWrapper}>
+          <div className={styles.mainContent}>
+            <div className={styles.checkboxWrapper}>
               <input
                 type='checkbox'
                 checked={completed}
                 onChange={() => completeTodo(id)}
                 className={styles.checkbox}
+                id={`todo-${id}`}
               />
-              <span className={styles.text}>{title}</span>
-            </label>
-            <p className={styles.createdAt}>{formatDateTime(createdAt)}</p>
+              <label htmlFor={`todo-${id}`} className={styles.checkmark} />
+            </div>
+
+            <div className={styles.todoInfo}>
+              <span className={styles.title}>{title}</span>
+              <div className={styles.metaInfo}>
+                <CategoryBadge category={category} />
+                <time className={styles.createdAt}>
+                  {formatDateTime(createdAt)}
+                </time>
+              </div>
+            </div>
           </div>
-          <div className={styles.buttonContainer}>
+
+          <div
+            className={`${styles.actions} ${isHovered ? styles.visible : ''}`}
+          >
             <button
-              className={styles.editButton}
+              className={styles.actionButton}
               onClick={() => setEditing(true)}
+              aria-label='Edit todo'
             >
               Edit
             </button>
             <button
-              className={styles.deleteButton}
+              className={`${styles.actionButton} ${styles.deleteButton}`}
               onClick={() => deleteTodo(id)}
+              aria-label='Delete todo'
             >
               Delete
             </button>
           </div>
-        </>
+        </div>
       )}
     </li>
   );
