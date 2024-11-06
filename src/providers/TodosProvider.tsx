@@ -30,17 +30,20 @@ export const TodosProvider = ({ children }: TodosProviderProps) => {
     }
   }, [todos]);
 
-  const addTodo = (title: string) => {
+  const addTodo = (title: string, category: string) => {
     setTodos((prev) => [
       {
         id: crypto.randomUUID(),
         title,
+        category,
         completed: false,
         createdAt: Date.now(),
         updatedAt: null,
       },
       ...prev,
     ]);
+
+    console.log('Todo Added:', { title, category });
   };
 
   const editTodo = (title: string, id: string) => {

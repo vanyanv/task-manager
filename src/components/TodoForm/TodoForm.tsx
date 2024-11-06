@@ -17,17 +17,18 @@ export default function TodoForm() {
     const todo = formData.get('todo') as string;
     const category = formData.get('category') as string;
 
+    //manual error checking
     if (!todo) {
       setError({ ...errors, input: 'Please enter a todo' });
       return;
     }
-    if (!todo) {
+    if (!category) {
       setError({ ...errors, category: 'Please select a category' });
       return;
     }
 
-    addTodo(todo);
-
+    addTodo(todo, category);
+    //resets the form
     event.currentTarget.reset();
   }
 
@@ -60,6 +61,9 @@ export default function TodoForm() {
               </option>
             ))}
           </select>
+          {errors.category && (
+            <p className={styles.errorMessage}>{errors.category}</p>
+          )}
         </div>
 
         <button type='submit' className={styles.button}>
