@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { useTodos } from '../../hooks/useTodos';
 import styles from './Todo.module.css';
 import EditingForm from '../EditingForm/EditingForm';
+import CategoryBadge from '../CategoryBadge/CategoryBadge';
 
 type TodoPropTypes = {
   id: string;
   title: string;
+  category: string;
   completed: boolean;
   createdAt: number;
 };
@@ -13,6 +15,7 @@ type TodoPropTypes = {
 export default function TodoComponent({
   id,
   title,
+  category,
   completed,
   createdAt,
 }: TodoPropTypes) {
@@ -42,6 +45,7 @@ export default function TodoComponent({
       ) : (
         <>
           <div className={styles.todoContent}>
+            <CategoryBadge category={category} />
             <label className={styles.checkboxContainer}>
               <input
                 type='checkbox'

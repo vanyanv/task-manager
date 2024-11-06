@@ -2,6 +2,7 @@ export interface Todo {
   id: string;
   title: string;
   completed: boolean;
+  category: string;
   createdAt: number;
   updatedAt: number | null;
 }

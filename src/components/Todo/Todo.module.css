@@ -97,6 +97,22 @@
   background-color: #dc2626;
 }
 
+/* Add these to your existing Todo.module.css */
+.todoContent {
+  flex: 1;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1rem;
+  align-items: center;
+}
+
+@media (max-width: 640px) {
+  .todoContent {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+}
+
 /* Responsive Design */
 @media (max-width: 480px) {
   .buttonContainer {
