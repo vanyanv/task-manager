@@ -3,7 +3,7 @@ import { useTodos } from '../../hooks/useTodos';
 import styles from './Todo.module.css';
 import EditingForm from '../EditingForm/EditingForm';
 import CategoryBadge from '../CategoryBadge/CategoryBadge';
-
+import { useAISuggestions } from '../../hooks/useGetAiSuggestions';
 type TodoPropTypes = {
   id: string;
   title: string;
@@ -22,6 +22,7 @@ export default function TodoComponent({
   const [editing, setEditing] = useState<boolean>(false);
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const { completeTodo, deleteTodo } = useTodos();
+  const { suggestions, loading, error, getAISuggestions } = useAISuggestions();
 
   const formatDateTime = (date: number): string => {
     const formatter = new Intl.DateTimeFormat('en-US', {
@@ -84,9 +85,20 @@ export default function TodoComponent({
             >
               Delete
             </button>
+            <button
+              disabled={loading}
+              className={`${styles.actionButton} ${styles.deleteButton}`}
+              onClick={() => getAISuggestions(title)}
+            >
+              Ai ✨
+            </button>
           </div>
         </div>
       )}
+      {loading && <p>Loading suggestions...</p>}
+      {suggestions?.map((text: string) => (
+        <p key={text}>{text}</p>
+      ))}
     </li>
   );
 }
