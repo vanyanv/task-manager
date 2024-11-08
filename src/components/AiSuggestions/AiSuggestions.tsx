@@ -11,8 +11,9 @@ export default function AISuggestions({ todoTitle }: AISuggestionsProps) {
   const { suggestions, loading, getAISuggestions } = useAISuggestions();
 
   const handleToggleSuggestions = () => {
-    getAISuggestions(todoTitle);
-
+    if (!suggestions?.length && !loading) {
+      getAISuggestions(todoTitle);
+    }
     setShowSuggestions((prev) => !prev);
   };
 
