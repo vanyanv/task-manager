@@ -3,6 +3,9 @@ import { useTodos } from '../../hooks/useTodos';
 import styles from './Todo.module.css';
 import EditingForm from '../EditingForm/EditingForm';
 import CategoryBadge from '../CategoryBadge/CategoryBadge';
+import AISuggestions from '../AiSuggestions/AiSuggestions';
+import AISuggestionsInfo from '../AISuggestionInfo/AiSuggestionInfo';
+import { Check, Edit2, Trash2 } from 'lucide-react';
 
 type TodoPropTypes = {
   id: string;
@@ -35,58 +38,77 @@ export default function TodoComponent({
   };
 
   return (
-    <li
-      className={`${styles.todo} ${completed ? styles.completed : ''}`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {editing ? (
-        <EditingForm id={id} title={title} setEditing={setEditing} />
-      ) : (
-        <div className={styles.todoWrapper}>
-          <div className={styles.mainContent}>
-            <div className={styles.checkboxWrapper}>
-              <input
-                type='checkbox'
-                checked={completed}
-                onChange={() => completeTodo(id)}
-                className={styles.checkbox}
-                id={`todo-${id}`}
-              />
-              <label htmlFor={`todo-${id}`} className={styles.checkmark} />
-            </div>
+    <div className={styles.container}>
+      <li
+        className={`${styles.todo} ${completed ? styles.completed : ''}`}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        {editing ? (
+          <EditingForm id={id} title={title} setEditing={setEditing} />
+        ) : (
+          <div className={styles.todoWrapper}>
+            <div className={styles.mainContent}>
+              <div className={styles.checkboxWrapper}>
+                <input
+                  type='checkbox'
+                  checked={completed}
+                  onChange={() => completeTodo(id)}
+                  className={styles.checkbox}
+                  id={`todo-${id}`}
+                  aria-label={`Mark ${title} as ${
+                    completed ? 'incomplete' : 'complete'
+                  }`}
+                />
+                <div className={styles.checkmarkWrapper}>
+                  <div className={styles.checkmark}>
+                    <Check className={styles.checkIcon} size={14} />
+                  </div>
+                </div>
+              </div>
 
-            <div className={styles.todoInfo}>
-              <span className={styles.title}>{title}</span>
-              <div className={styles.metaInfo}>
-                <CategoryBadge category={category} />
-                <time className={styles.createdAt}>
-                  {formatDateTime(createdAt)}
-                </time>
+              <div className={styles.todoInfo}>
+                <span className={styles.title}>{title}</span>
+                <div className={styles.metaInfo}>
+                  <CategoryBadge category={category} />
+                  <time
+                    className={styles.createdAt}
+                    dateTime={new Date(createdAt).toISOString()}
+                  >
+                    {formatDateTime(createdAt)}
+                  </time>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div
-            className={`${styles.actions} ${isHovered ? styles.visible : ''}`}
-          >
-            <button
-              className={styles.actionButton}
-              onClick={() => setEditing(true)}
-              aria-label='Edit todo'
+            <div
+              className={`${styles.actions} ${isHovered ? styles.visible : ''}`}
             >
-              Edit
-            </button>
-            <button
-              className={`${styles.actionButton} ${styles.deleteButton}`}
-              onClick={() => deleteTodo(id)}
-              aria-label='Delete todo'
-            >
-              Delete
-            </button>
+              <button
+                className={`${styles.actionButton} ${styles.editButton}`}
+                onClick={() => setEditing(true)}
+                aria-label='Edit todo'
+              >
+                <Edit2 size={14} className={styles.buttonIcon} />
+                <span>Edit</span>
+              </button>
+              <button
+                className={`${styles.actionButton} ${styles.deleteButton}`}
+                onClick={() => deleteTodo(id)}
+                aria-label='Delete todo'
+              >
+                <Trash2 size={14} className={styles.buttonIcon} />
+                <span>Delete</span>
+              </button>
+            </div>
           </div>
-        </div>
-      )}
-    </li>
+        )}
+        <div className={styles.suggestionIndicator} />
+      </li>
+      <div className={styles.suggestionsContainer}>
+        <AISuggestionsInfo />
+        <AISuggestions todoTitle={title} />
+      </div>
+    </div>
   );
 }

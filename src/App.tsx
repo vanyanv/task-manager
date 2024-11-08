@@ -1,4 +1,3 @@
-// App.tsx
 import './App.css';
 import FilterBar from './components/FilterBar/FilterBar';
 import TodoComponent from './components/Todo/TodoComponent';
@@ -26,28 +25,33 @@ function App() {
           <h1>My Todo List</h1>
           <p className='app-subtitle'>Stay organized and productive</p>
         </header>
-        <main className='app-main'>
-          <TodoForm />
-          <FilterBar setFilter={setFilter} filter={filter} />
-          {filteredTodos.length > 0 ? (
-            <ul className='todo-list'>
-              {filteredTodos.map((todo: Todo) => (
-                <TodoComponent
-                  key={todo.id}
-                  id={todo.id}
-                  title={todo.title}
-                  category={todo.category}
-                  completed={todo.completed}
-                  createdAt={todo.createdAt}
-                />
-              ))}
-            </ul>
-          ) : (
-            <div className='empty-state'>
-              <p>No todos yet. Add one above!</p>
-            </div>
-          )}
-        </main>
+        {/* Sidebar with OllamaTest */}
+
+        <div className='app-grid'>
+          {/* Main Content */}
+          <div className='main-content'>
+            <TodoForm />
+            <FilterBar setFilter={setFilter} filter={filter} />
+            {filteredTodos.length > 0 ? (
+              <ul className='todo-list'>
+                {filteredTodos.map((todo: Todo) => (
+                  <TodoComponent
+                    key={todo.id}
+                    id={todo.id}
+                    title={todo.title}
+                    category={todo.category}
+                    completed={todo.completed}
+                    createdAt={todo.createdAt}
+                  />
+                ))}
+              </ul>
+            ) : (
+              <div className='empty-state'>
+                <p>No todos yet. Add one above!</p>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

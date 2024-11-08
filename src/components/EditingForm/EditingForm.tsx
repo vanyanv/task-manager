@@ -1,4 +1,5 @@
-import React from 'react';
+// EditingForm.tsx
+import React, { useRef, useEffect } from 'react';
 import styles from './EditingForm.module.css';
 import { useTodos } from '../../hooks/useTodos';
 
@@ -13,35 +14,58 @@ export default function EditingForm({
   id,
   setEditing,
 }: EditingFormProps) {
-  //context
   const { editTodo } = useTodos();
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  //using ref to select the input field
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   function submitEdit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
-
     const formData = new FormData(e.currentTarget);
     const newTodo = formData.get('edit') as string;
-    if (newTodo === '') return;
-    editTodo(newTodo, id);
+    if (newTodo.trim() === '') return;
+    editTodo(newTodo.trim(), id);
     setEditing(false);
   }
+
+  function handleKeyDown(e: React.KeyboardEvent) {
+    if (e.key === 'Escape') {
+      setEditing(false);
+    }
+  }
+
   return (
-    <>
+    <div className={styles.editingWrapper}>
       <form onSubmit={submitEdit} className={styles.editingForm}>
-        <label className={styles.checkboxContainer}>
-          <input type='text' name='edit' defaultValue={title} />
-        </label>
-        <button type='submit' className={styles.editButton}>
-          Confirm
-        </button>
-        <button
-          type='button'
-          className={styles.deleteButton}
-          onClick={() => setEditing(false)}
-        >
-          Cancel
-        </button>
+        <div className={styles.inputWrapper}>
+          <input
+            ref={inputRef}
+            type='text'
+            name='edit'
+            defaultValue={title}
+            className={styles.input}
+            onKeyDown={handleKeyDown}
+            placeholder='Update your todo...'
+            aria-label='Edit todo'
+          />
+        </div>
+
+        <div className={styles.buttonGroup}>
+          <button type='submit' className={styles.actionButton}>
+            Save
+          </button>
+          <button
+            type='button'
+            className={`${styles.actionButton} ${styles.cancelButton}`}
+            onClick={() => setEditing(false)}
+          >
+            Cancel
+          </button>
+        </div>
       </form>
-    </>
+    </div>
   );
 }

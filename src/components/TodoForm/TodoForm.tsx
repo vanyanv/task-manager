@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styles from './TodoForm.module.css';
 import { useTodos } from '../../hooks/useTodos';
 import { todoCategories } from '../../constants/categories';
+import OllamaTest from '../OllamaTest/OllamaTest';
 
 export default function TodoForm() {
   const { addTodo } = useTodos();
@@ -17,7 +18,6 @@ export default function TodoForm() {
     const todo = formData.get('todo') as string;
     const category = formData.get('category') as string;
 
-    //manual error checking
     if (!todo) {
       setError({ ...errors, input: 'Please enter a todo' });
       return;
@@ -28,12 +28,14 @@ export default function TodoForm() {
     }
 
     addTodo(todo, category);
-    //resets the form
     event.currentTarget.reset();
   }
 
   return (
     <div className={styles.container}>
+      <div className={styles.headerSection}>
+        <OllamaTest />
+      </div>
       <form onSubmit={onSubmit} className={styles.form}>
         <div className={styles.inputGroup}>
           <label htmlFor='todo' className={styles.label}>

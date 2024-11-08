@@ -1,70 +1,124 @@
-/* Updated Styling for Integrated EditingForm */
+/* EditingForm.module.css */
+.editingWrapper {
+  width: 100%;
+  padding: 0.75rem 1.25rem;
+  background-color: #ffffff;
+}
+
 .editingForm {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0.75rem 0; /* Adjusted padding to match the todo item */
-  border: none;
-  box-shadow: none;
-  margin: 0; /* Removed margin to fully blend with todo */
+  gap: 1rem;
 }
 
-.editingForm input[type='text'] {
+.inputWrapper {
+  position: relative;
   flex: 1;
-  padding: 0.5rem 1rem; /* Padding aligns with the todo item */
-  font-size: 1rem;
-  border: 1px solid #d1d5db; /* Subtle border for the input */
-  border-radius: 4px;
-  color: #374151;
+}
+
+.input {
+  width: 100%;
+  padding: 0.625rem 0.875rem;
+  font-size: 0.95rem;
+  color: #1f2937;
+  background-color: #f9fafb;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.input:hover {
+  border-color: #d1d5db;
+}
+
+.input:focus {
   outline: none;
-  background-color: transparent; /* Transparent background to blend */
-  transition: border-color 0.2s ease;
+  border-color: #3b82f6;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
 }
 
-.editingForm input[type='text']:focus {
-  border-color: #2563eb; /* Blue border on focus */
+.buttonGroup {
+  display: flex;
+  gap: 0.5rem;
 }
 
-/* Integrated Buttons Styling */
-.editingForm .editButton,
-.editingForm .deleteButton {
-  padding: 0.35rem 0.85rem;
-  font-size: 0.85rem;
-  border-radius: 4px;
-  transition: background-color 0.2s ease;
-}
-
-.editingForm .editButton {
+.actionButton {
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
   background-color: #3b82f6;
-  color: white;
-  margin-left: 0.5rem;
+  color: #ffffff;
 }
 
-.editingForm .editButton:hover {
+.actionButton:hover {
   background-color: #2563eb;
+  transform: translateY(-1px);
 }
 
-.editingForm .deleteButton {
-  background-color: #ef4444;
-  color: white;
-  margin-left: 0.5rem;
+.actionButton:active {
+  transform: translateY(0);
 }
 
-.editingForm .deleteButton:hover {
-  background-color: #dc2626;
+.cancelButton {
+  background-color: #f3f4f6;
+  color: #4b5563;
+}
+
+.cancelButton:hover {
+  background-color: #e5e7eb;
+  color: #1f2937;
+}
+
+/* Focus styles for keyboard navigation */
+.actionButton:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+}
+
+/* Animations */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.editingWrapper {
+  animation: slideIn 0.2s ease;
 }
 
 /* Responsive Design */
-@media (max-width: 480px) {
-  .editingForm {
-    flex-direction: column;
-    align-items: stretch;
+@media (max-width: 640px) {
+  .editingWrapper {
+    padding: 0.75rem 1rem;
   }
 
-  .editingForm input[type='text'],
-  .editingForm .editButton,
-  .editingForm .deleteButton {
+  .editingForm {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .buttonGroup {
     width: 100%;
-    margin: 0.25rem 0;
+  }
+
+  .actionButton {
+    flex: 1;
+    text-align: center;
+    padding: 0.75rem 1rem;
+  }
+
+  .input {
+    padding: 0.75rem;
+    font-size: 1rem;
   }
 }
