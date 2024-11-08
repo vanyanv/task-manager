@@ -3,7 +3,9 @@ import { useTodos } from '../../hooks/useTodos';
 import styles from './Todo.module.css';
 import EditingForm from '../EditingForm/EditingForm';
 import CategoryBadge from '../CategoryBadge/CategoryBadge';
-import { useAISuggestions } from '../../hooks/useGetAiSuggestions';
+import AISuggestions from '../AiSuggestions/AiSuggestions';
+import AISuggestionsInfo from '../AISuggestionInfo/AiSuggestionInfo';
+
 type TodoPropTypes = {
   id: string;
   title: string;
@@ -22,7 +24,6 @@ export default function TodoComponent({
   const [editing, setEditing] = useState<boolean>(false);
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const { completeTodo, deleteTodo } = useTodos();
-  const { suggestions, loading, error, getAISuggestions } = useAISuggestions();
 
   const formatDateTime = (date: number): string => {
     const formatter = new Intl.DateTimeFormat('en-US', {
@@ -36,69 +37,60 @@ export default function TodoComponent({
   };
 
   return (
-    <li
-      className={`${styles.todo} ${completed ? styles.completed : ''}`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {editing ? (
-        <EditingForm id={id} title={title} setEditing={setEditing} />
-      ) : (
-        <div className={styles.todoWrapper}>
-          <div className={styles.mainContent}>
-            <div className={styles.checkboxWrapper}>
-              <input
-                type='checkbox'
-                checked={completed}
-                onChange={() => completeTodo(id)}
-                className={styles.checkbox}
-                id={`todo-${id}`}
-              />
-              <label htmlFor={`todo-${id}`} className={styles.checkmark} />
-            </div>
+    <div>
+      <li
+        className={`${styles.todo} ${completed ? styles.completed : ''}`}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        {editing ? (
+          <EditingForm id={id} title={title} setEditing={setEditing} />
+        ) : (
+          <div className={styles.todoWrapper}>
+            <div className={styles.mainContent}>
+              <div className={styles.checkboxWrapper}>
+                <input
+                  type='checkbox'
+                  checked={completed}
+                  onChange={() => completeTodo(id)}
+                  className={styles.checkbox}
+                  id={`todo-${id}`}
+                />
+                <label htmlFor={`todo-${id}`} className={styles.checkmark} />
+              </div>
 
-            <div className={styles.todoInfo}>
-              <span className={styles.title}>{title}</span>
-              <div className={styles.metaInfo}>
-                <CategoryBadge category={category} />
-                <time className={styles.createdAt}>
-                  {formatDateTime(createdAt)}
-                </time>
+              <div className={styles.todoInfo}>
+                <span className={styles.title}>{title}</span>
+                <div className={styles.metaInfo}>
+                  <CategoryBadge category={category} />
+                  <time className={styles.createdAt}>
+                    {formatDateTime(createdAt)}
+                  </time>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div
-            className={`${styles.actions} ${isHovered ? styles.visible : ''}`}
-          >
-            <button
-              className={styles.actionButton}
-              onClick={() => setEditing(true)}
-              aria-label='Edit todo'
+            <div
+              className={`${styles.actions} ${isHovered ? styles.visible : ''}`}
             >
-              Edit
-            </button>
-            <button
-              className={`${styles.actionButton} ${styles.deleteButton}`}
-              onClick={() => deleteTodo(id)}
-              aria-label='Delete todo'
-            >
-              Delete
-            </button>
-            <button
-              disabled={loading}
-              className={`${styles.actionButton} ${styles.deleteButton}`}
-              onClick={() => getAISuggestions(title)}
-            >
-              Ai ✨
-            </button>
+              <button
+                className={styles.actionButton}
+                onClick={() => setEditing(true)}
+              >
+                Edit
+              </button>
+              <button
+                className={`${styles.actionButton} ${styles.deleteButton}`}
+                onClick={() => deleteTodo(id)}
+              >
+                Delete
+              </button>
+            </div>
           </div>
-        </div>
-      )}
-      {loading && <p>Loading suggestions...</p>}
-      {suggestions?.map((text: string) => (
-        <p key={text}>{text}</p>
-      ))}
-    </li>
+        )}
+        <AISuggestionsInfo />
+      </li>
+      <AISuggestions todoTitle={title} />
+    </div>
   );
 }
