@@ -1,11 +1,12 @@
 import { useState } from 'react';
+
 type FilterBarProps = {
   filter: string;
   setFilter: (input: string) => void;
 };
 
 const FilterBar = ({ setFilter, filter }: FilterBarProps) => {
-  const filters = ['All', 'Completed'];
+  const filters = ['All', 'Completed', 'Ai'];
   const [isSelected, setIsSelected] = useState(false);
 
   const toggleSelected = () => setIsSelected(!isSelected);

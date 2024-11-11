@@ -2,6 +2,7 @@ import './App.css';
 import FilterBar from './components/FilterBar/FilterBar';
 import TodoComponent from './components/Todo/TodoComponent';
 import TodoForm from './components/TodoForm/TodoForm';
+import { useAITaskOrdering } from './hooks/useAiTaskOrdering';
 import { useTodos } from './hooks/useTodos';
 import { Todo } from './types/todos.types';
 import { useState } from 'react';
@@ -9,14 +10,20 @@ import { useState } from 'react';
 function App() {
   const [filter, setFilter] = useState<string>('All');
   const { todos } = useTodos();
+  const { orderedTasks, getAIOrderedTasks } = useAITaskOrdering();
 
-  const filteredTodos = todos.filter((todo: Todo) => {
+  let filteredTodos = todos.filter((todo: Todo) => {
     if (filter === 'Completed') {
       return todo.completed;
     } else {
       return todo;
     }
   });
+
+  if (filter === 'Ai') {
+    filteredTodos = orderedTasks || todos;
+    getAIOrderedTasks(todos);
+  }
 
   return (
     <div className='app'>
